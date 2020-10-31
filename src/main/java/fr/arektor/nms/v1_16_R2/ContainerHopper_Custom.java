@@ -41,6 +41,7 @@ public class ContainerHopper_Custom extends ContainerHopper implements CustomGui
 	private Reflector reflector;
 	private HumanAction closeAction;
 	private DataChangeReaction dataChangeReaction;
+	private DragReaction dragReaction;
 	private String ctitle;
 	private Player owner;
 	private CustomGui parent = null, mirrorOf = null;
@@ -264,6 +265,14 @@ public class ContainerHopper_Custom extends ContainerHopper implements CustomGui
 
 	public DataChangeReaction getDataChangeReaction() {
 		return this.dataChangeReaction;
+	}
+
+	public void setDragReaction(DragReaction reaction) {
+		this.dragReaction = reaction;
+	}
+	
+	public DragReaction getDragReaction() {
+		return this.dragReaction;
 	}
 
 	public List<CustomGui> getMirrors() {

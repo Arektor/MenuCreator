@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
@@ -20,6 +21,9 @@ public interface CustomGui {
 	
 	public void setDataChangeReaction(DataChangeReaction reaction);
 	public DataChangeReaction getDataChangeReaction();
+	
+	public void setDragReaction(DragReaction reaction);
+	public DragReaction getDragReaction();
 
 	/*
 	public List<? extends Slot> getRawSlots();
@@ -179,6 +183,9 @@ public interface CustomGui {
 
 	public int getWidth();
 	public int getLength();
+	default public int getSize() {
+		return getSlots().size();
+	}
 	
 	public CustomGui getMirrorOf();
 	public void setMirrorOf(CustomGui mirrorOf);
@@ -232,5 +239,9 @@ public interface CustomGui {
 	
 	public interface DataChangeReaction {
 		void run(int index, Object oldData);
+	}
+	
+	public interface DragReaction {
+		void run(InventoryDragEvent event);
 	}
 }

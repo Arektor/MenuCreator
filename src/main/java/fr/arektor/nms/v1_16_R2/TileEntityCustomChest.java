@@ -26,6 +26,7 @@ public class TileEntityCustomChest extends TileEntityChest implements CustomGui 
 
 	private HumanAction closeAction;
 	private DataChangeReaction dataChangeReaction;
+	private DragReaction dragReaction;
 	private List<StaticSlot> slots = new ArrayList<StaticSlot>();
 	private List<CustomGui> mirrors = new ArrayList<CustomGui>();
 	private CustomGui parent,mirrorOf;
@@ -79,6 +80,16 @@ public class TileEntityCustomChest extends TileEntityChest implements CustomGui 
 	@Override
 	public DataChangeReaction getDataChangeReaction() {
 		return this.dataChangeReaction;
+	}
+
+	@Override
+	public void setDragReaction(DragReaction reaction) {
+		this.dragReaction = reaction;
+	}
+
+	@Override
+	public DragReaction getDragReaction() {
+		return this.dragReaction;
 	}
 
 	@Override

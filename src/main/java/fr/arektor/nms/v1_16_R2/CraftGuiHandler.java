@@ -23,6 +23,7 @@ import fr.arektor.menucreator.GuiHandler;
 import fr.arektor.menucreator.MenuCreator;
 import fr.arektor.menucreator.api.CustomGui;
 import fr.arektor.menucreator.api.CustomPlayerGui;
+import fr.arektor.menucreator.api.CustomGui.DragReaction;
 import fr.arektor.menucreator.api.CustomPlayerGui.PlayerSlotType;
 import fr.arektor.menucreator.api.Slot;
 import fr.arektor.menucreator.api.TextInput;
@@ -38,8 +39,8 @@ public class CraftGuiHandler implements GuiHandler {
 		boolean customGuiClicked = evt.getClickedInventory().equals(evt.getView().getTopInventory());
 		boolean playerGuiClicked = false;
 		if (!customGuiClicked && human.defaultContainer instanceof CustomPlayerGui) playerGuiClicked = true;
-		
-		
+
+
 		if (human.activeContainer instanceof CustomPlayerGui) {
 			if (evt.getWhoClicked() instanceof Player) Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> ((Player)evt.getWhoClicked()).updateInventory(), 1L);
 			//System.out.println("Slot: "+evt.getSlot());
@@ -80,7 +81,12 @@ public class CraftGuiHandler implements GuiHandler {
 	public void handle(InventoryDragEvent evt) {
 		EntityHuman human = ((CraftHumanEntity)evt.getWhoClicked()).getHandle();
 		if (human.activeContainer instanceof CustomGui || human.activeContainer instanceof TextInput) {
-			if (evt.getWhoClicked() instanceof Player) Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> ((Player)evt.getWhoClicked()).updateInventory(), 1L);
+			//Checking if active container is either a custom player inventory, or at least one of the dragged slots belong to the custom GUI.
+			if (human.activeContainer instanceof CustomPlayerGui || evt.getRawSlots().stream().anyMatch((i) -> { return i >= 0 && i < ((CustomGui)human.activeContainer).getSize(); })) {
+				DragReaction reaction = ((CustomGui)human.activeContainer).getDragReaction();
+				if (reaction != null) reaction.run(evt);
+				if (evt.getWhoClicked() instanceof Player) Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> ((Player)evt.getWhoClicked()).updateInventory(), 1L);
+			}
 		}
 	}
 
@@ -106,13 +112,13 @@ public class CraftGuiHandler implements GuiHandler {
 			EntityPlayer ep = ((CraftPlayer)p).getHandle();
 			ref.setReference(ep);
 			PlayerInventoryBackup backup = defaultContainers.remove(p.getUniqueId());
-			
+
 			PlayerInventory inventory = backup.getInventory();
 			ref.set("inventory", inventory);
-			
+
 			chRef.setReference((CraftHumanEntity)p);
 			chRef.set("inventory", backup.getCraftInventory());
-			
+
 			if (ep.activeContainer == ep.defaultContainer) {
 				ep.activeContainer = backup.getContainer();
 			}
@@ -121,20 +127,20 @@ public class CraftGuiHandler implements GuiHandler {
 			p.updateInventory();
 		}
 	}
-	
+
 	private static final Reflector chRef = new Reflector(CraftHumanEntity.class, null);
 	private void setPlayerDefaultContainer(Player p, ContainerPlayer_Custom container) {
 		//p.getInventory().clear();
 		EntityPlayer ep = ((CraftPlayer)p).getHandle();
 		ref.setReference(ep);
 		if (!MenuCreator.isUnsafeMode() && !defaultContainers.containsKey(p.getUniqueId())) defaultContainers.put(p.getUniqueId(), new PlayerInventoryBackup(ep));
-		
+
 		PlayerInventory inventory = container.getOwnerInventory();
 		ref.set("inventory", inventory);
-		
+
 		chRef.setReference((CraftHumanEntity)p);
 		chRef.set("inventory", new CraftInventoryPlayer(inventory));
-		
+
 		if (ep.activeContainer == ep.defaultContainer) {
 			ep.activeContainer = container;
 		}
@@ -146,15 +152,15 @@ public class CraftGuiHandler implements GuiHandler {
 
 
 	private static class PlayerInventoryBackup {
-		
+
 		CraftInventoryPlayer craftInventory;
 		PlayerInventory inventory;
 		ContainerPlayer container;
-		
+
 		private PlayerInventoryBackup(EntityPlayer ep) {
 			this.container = ep.defaultContainer;
 			this.inventory = ep.inventory;
-			
+
 			chRef.setReference(ep.getBukkitEntity());
 			this.craftInventory = (CraftInventoryPlayer) chRef.get("inventory");
 		}

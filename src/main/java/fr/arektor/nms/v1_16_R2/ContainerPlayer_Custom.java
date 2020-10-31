@@ -36,6 +36,7 @@ public class ContainerPlayer_Custom extends ContainerPlayer implements CustomPla
 	private Reflector ref;
 	private HumanAction closeAction;
 	private DataChangeReaction dataChangeReaction;
+	private DragReaction dragReaction;
 	private Player owner;
 	private Map<PlayerSlotType,List<CustomSlotPlayer>> customSlots = new HashMap<>();
 	private PlayerInventory ownerInventory;
@@ -205,6 +206,14 @@ public class ContainerPlayer_Custom extends ContainerPlayer implements CustomPla
 	
 	public DataChangeReaction getDataChangeReaction() {
 		return this.dataChangeReaction;
+	}
+
+	public void setDragReaction(DragReaction reaction) {
+		this.dragReaction = reaction;
+	}
+	
+	public DragReaction getDragReaction() {
+		return this.dragReaction;
 	}
 	
 	public List<CustomGui> getMirrors() {
