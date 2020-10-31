@@ -1,0 +1,15 @@
+name: MenuCreator
+main: fr.arektor.menucreator.MenuCreator
+author: Arektor
+version: 1.0
+description: A plugin to easily create custom GUIs
+api-version: 1.16
+commands:
+   menucreator:
+      description: Admin command
+      usage: /menucreator
+      permission: menucreator.admin
+permissions:
+  menucreator.admin:
+    description: Allows to use the menucreator command
+    default: op
