@@ -1,6 +1,8 @@
 package fr.arektor.menucreator;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -9,6 +11,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.arektor.common.utils.Version;
+import fr.arektor.menucreator.commands.CMD_MenuCreator;
 
 public class MenuCreator extends JavaPlugin implements Listener {
 	
@@ -47,6 +50,12 @@ public class MenuCreator extends JavaPlugin implements Listener {
 			return;
 		}
 		
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (cmd.getName().equalsIgnoreCase("menucreator")) return CMD_MenuCreator.handle(sender, label, args);
+		return false;
 	}
 	
 	@EventHandler

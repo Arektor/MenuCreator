@@ -18,7 +18,7 @@ public class Config {
 		dataArraySize = config.getInt("data-array-size");
 	}
 	
-	protected static void reload() {
+	public static void reload() {
 		MenuCreator.getPluginInstance().reloadConfig();
 		load();
 	}
