@@ -6,7 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 
-import fr.arektor.menucreator.api.Slot.HumanAction;
+import fr.arektor.menucreator.api.CustomGui.HumanAction;
 
 public interface TextInput {
 	

@@ -31,8 +31,8 @@ import org.bukkit.inventory.InventoryView.Property;
 import fr.arektor.common.utils.Reflector;
 import fr.arektor.menucreator.MenuCreator;
 import fr.arektor.menucreator.api.CustomGui;
+import fr.arektor.menucreator.api.CustomGui.HumanAction;
 import fr.arektor.menucreator.api.CustomPlayerGui.PlayerSlotType;
-import fr.arektor.menucreator.api.Slot.HumanAction;
 import fr.arektor.menucreator.api.TextInput;
 import fr.arektor.nms.v1_16_R2.ContainerPlayer_Custom.CustomSlotPlayer;
 

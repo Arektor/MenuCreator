@@ -31,7 +31,6 @@ import fr.arektor.menucreator.Config;
 import fr.arektor.menucreator.MenuCreator;
 import fr.arektor.menucreator.api.CustomGui;
 import fr.arektor.menucreator.api.CustomPlayerGui.PlayerSlotType;
-import fr.arektor.menucreator.api.Slot.HumanAction;
 import fr.arektor.menucreator.api.StaticSlot;
 import fr.arektor.menucreator.api.TextInput;
 import fr.arektor.nms.v1_16_R2.ContainerPlayer_Custom.CustomSlotPlayer;

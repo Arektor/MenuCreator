@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 public interface Slot {
@@ -31,8 +32,8 @@ public interface Slot {
 	public Slot getMirrorOf();
 	public void setMirrorOf(Slot slot);
 	
-	public HumanAction getClickAction();
-	public void setClickAction(HumanAction action);
+	public ClickAction getClickAction();
+	public void setClickAction(ClickAction action);
 
 	public AccessCondition getAccessCondition();
 	public void setAccessCondition(AccessCondition condition);
@@ -78,8 +79,9 @@ public interface Slot {
 		boolean check(ItemStack is);
 	}
 	
-	public interface HumanAction {
-		void run(HumanEntity human);
+	public interface ClickAction {
+		public static final ClickAction NOTHING = (who,clickType) -> {};
+		void run(HumanEntity who, ClickType clickType);
 	}
 	
 	public interface Reaction {

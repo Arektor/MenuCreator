@@ -19,7 +19,6 @@ import org.bukkit.inventory.InventoryView;
 import fr.arektor.menucreator.Config;
 import fr.arektor.menucreator.api.CustomGui;
 import fr.arektor.menucreator.api.Slot;
-import fr.arektor.menucreator.api.Slot.HumanAction;
 import fr.arektor.menucreator.api.StaticSlot;
 
 public class TileEntityCustomDispenser extends TileEntityDispenser implements CustomGui {

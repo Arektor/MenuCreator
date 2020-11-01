@@ -12,6 +12,7 @@ public class CMD_MenuCreator {
 	public static boolean handle(CommandSender sender, String label, String[] args) {
 		if (args.length >= 1) {
 			if (args[0].equalsIgnoreCase("config")) handleConfigSubcmd(sender, Arrays.copyOfRange(args, 1, args.length));
+			if (args[0].equalsIgnoreCase("create")) handleCreateSubcmd(sender, Arrays.copyOfRange(args, 1, args.length));
 		} else {
 			//TODO print help?
 		}
@@ -27,5 +28,9 @@ public class CMD_MenuCreator {
 		} else {
 			//TODO print help
 		}
+	}
+
+	private static void handleCreateSubcmd(CommandSender sender, String[] args) {
+		
 	}
 }

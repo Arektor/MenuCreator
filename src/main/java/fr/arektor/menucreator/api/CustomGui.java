@@ -12,8 +12,6 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import fr.arektor.menucreator.api.Slot.HumanAction;
-
 public interface CustomGui {
 
 	public void setCloseAction(HumanAction action);
@@ -243,5 +241,9 @@ public interface CustomGui {
 	
 	public interface DragReaction {
 		void run(InventoryDragEvent event);
+	}
+	
+	public interface HumanAction {
+		void run(HumanEntity who);
 	}
 }

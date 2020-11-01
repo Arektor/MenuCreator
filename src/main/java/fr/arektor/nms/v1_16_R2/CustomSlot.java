@@ -19,7 +19,7 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 	private CustomGui gui = null;
 	private AccessCondition playerCondition = (human) -> {return true;};
 	private ItemCondition itemCondition = (item) -> {return true;};
-	private HumanAction action = (human) -> {};
+	private ClickAction action = ClickAction.NOTHING;
 	private Reaction reaction = () -> {};
 	private int x,y;
 	private fr.arektor.menucreator.api.Slot mirrorOf;
@@ -124,13 +124,13 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 	}
 
 	@Override
-	public HumanAction getClickAction() {
+	public ClickAction getClickAction() {
 		return this.action;
 	}
 
 	@Override
-	public void setClickAction(HumanAction action) {
-		if (action == null) action = (human) -> {};
+	public void setClickAction(ClickAction action) {
+		if (action == null) action = ClickAction.NOTHING;
 		this.action = action;
 	}
 	
@@ -160,8 +160,8 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 			this.setAccessCondition((human) -> {
 				return cloneTarget.getAccessCondition().check(human);
 			});
-			this.setClickAction((human) -> {
-				cloneTarget.getClickAction().run(human);
+			this.setClickAction((who,clickType) -> {
+				cloneTarget.getClickAction().run(who,clickType);
 			});
 			this.setItemChangeReaction(() -> {
 				cloneTarget.getItemChangeReaction().run();

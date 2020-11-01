@@ -27,7 +27,6 @@ import fr.arektor.menucreator.Config;
 import fr.arektor.menucreator.MenuCreator;
 import fr.arektor.menucreator.api.CustomGui;
 import fr.arektor.menucreator.api.CustomPlayerGui;
-import fr.arektor.menucreator.api.Slot.HumanAction;
 import fr.arektor.menucreator.api.TextInput;
 
 public class ContainerPlayer_Custom extends ContainerPlayer implements CustomPlayerGui {

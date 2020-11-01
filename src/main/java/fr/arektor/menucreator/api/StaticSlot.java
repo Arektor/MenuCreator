@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 public class StaticSlot implements Slot {
 	
 	private ItemStack item;
-	private HumanAction clickAction;
+	private ClickAction clickAction;
 	private AccessCondition accessCondition;
 	private ItemCondition itemCondition;
 	private Reaction itemChangeReaction;
@@ -35,12 +35,12 @@ public class StaticSlot implements Slot {
 	}
 
 	@Override
-	public HumanAction getClickAction() {
+	public ClickAction getClickAction() {
 		return this.clickAction;
 	}
 
 	@Override
-	public void setClickAction(HumanAction action) {
+	public void setClickAction(ClickAction action) {
 		this.clickAction = action;
 		this.getMirrors().forEach((slot) -> slot.setClickAction(action));
 	}
