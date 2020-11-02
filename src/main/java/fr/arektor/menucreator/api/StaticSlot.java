@@ -11,7 +11,7 @@ public class StaticSlot implements Slot {
 	private ClickAction clickAction;
 	private AccessCondition accessCondition;
 	private ItemCondition itemCondition;
-	private Reaction itemChangeReaction;
+	private ItemChangeReaction itemChangeReaction;
 	private CustomGui gui;
 	private int posX = 1, posY = 1;
 	private List<Slot> mirrors = new ArrayList<Slot>();
@@ -68,14 +68,15 @@ public class StaticSlot implements Slot {
 	}
 
 	@Override
-	public Reaction getItemChangeReaction() {
+	public ItemChangeReaction getItemChangeReaction() {
 		return this.itemChangeReaction;
 	}
 
 	@Override
-	public void setItemChangeReaction(Reaction reaction) {
+	public void setItemChangeReaction(ItemChangeReaction reaction) {
+		if (reaction == null) reaction = ItemChangeReaction.NOTHING;
 		this.itemChangeReaction = reaction;
-		this.getMirrors().forEach((slot) -> slot.setItemChangeReaction(reaction));
+		this.getMirrors().forEach((slot) -> slot.setItemChangeReaction(getItemChangeReaction()));
 	}
 
 	@Override

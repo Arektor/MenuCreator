@@ -3,6 +3,7 @@ package fr.arektor.nms.v1_16_R2;
 import java.util.List;
 
 import net.minecraft.server.v1_16_R2.EntityHuman;
+import net.minecraft.server.v1_16_R2.EntityPlayer;
 import net.minecraft.server.v1_16_R2.IInventory;
 import net.minecraft.server.v1_16_R2.ItemStack;
 import net.minecraft.server.v1_16_R2.Slot;
@@ -20,7 +21,7 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 	private AccessCondition playerCondition = (human) -> {return true;};
 	private ItemCondition itemCondition = (item) -> {return true;};
 	private ClickAction action = ClickAction.NOTHING;
-	private Reaction reaction = () -> {};
+	private ItemChangeReaction itemChangeReaction = ItemChangeReaction.NOTHING;
 	private int x,y;
 	private fr.arektor.menucreator.api.Slot mirrorOf;
 	
@@ -46,7 +47,7 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 
 	public boolean isAllowed(EntityHuman entityhuman) {
 		//System.out.println("isAllowed(EntityHuman)");
-		if (this.playerCondition != null) return this.playerCondition.check(entityhuman.getBukkitEntity());
+		if (this.playerCondition != null) return this.playerCondition.check(((EntityPlayer)entityhuman).getBukkitEntity());
 		else return true;
 	}
 
@@ -88,22 +89,24 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 	}
 
 	@Override
-	public Reaction getItemChangeReaction() {
-		return this.reaction;
+	public ItemChangeReaction getItemChangeReaction() {
+		return this.itemChangeReaction;
 	}
 
 	@Override
-	public void setItemChangeReaction(Reaction reaction) {
-		if (reaction == null) reaction = () -> {};
-		this.reaction = reaction;
+	public void setItemChangeReaction(ItemChangeReaction reaction) {
+		if (reaction == null) reaction = ItemChangeReaction.NOTHING;
+		this.itemChangeReaction = reaction;
 	}
 
 	@Override
 	public void set(org.bukkit.inventory.ItemStack is) {
+		ItemStack oldItem = super.getItem();
+		
 		if (is == null) super.set(ItemStack.b);
 		else super.set(CraftItemStack.asNMSCopy(is));
 		
-		if (this.reaction != null) this.reaction.run();
+		if (this.itemChangeReaction != null) this.itemChangeReaction.run(CraftItemStack.asBukkitCopy(oldItem));
 	}
 
 	@Override
@@ -115,9 +118,11 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 	
 	@Override
 	public void set(ItemStack is) {
+		ItemStack oldItem = super.getItem();
+		
 		super.set(is);
 		if (this.mirrorOf == null) {
-			if (this.reaction != null) this.reaction.run();
+			if (this.itemChangeReaction != null) this.itemChangeReaction.run(CraftItemStack.asBukkitCopy(oldItem));
 		} else {
 			this.mirrorOf.set(CraftItemStack.asCraftMirror(is));
 		}
@@ -163,8 +168,8 @@ public class CustomSlot extends Slot implements fr.arektor.menucreator.api.Slot 
 			this.setClickAction((who,clickType) -> {
 				cloneTarget.getClickAction().run(who,clickType);
 			});
-			this.setItemChangeReaction(() -> {
-				cloneTarget.getItemChangeReaction().run();
+			this.setItemChangeReaction((oldItem) -> {
+				cloneTarget.getItemChangeReaction().run(oldItem);
 			});
 			this.setItemCondition((item) -> {
 				return cloneTarget.getItemCondition().check(item);

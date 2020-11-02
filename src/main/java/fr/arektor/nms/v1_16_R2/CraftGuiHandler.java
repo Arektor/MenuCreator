@@ -48,14 +48,14 @@ public class CraftGuiHandler implements GuiHandler {
 
 			System.out.println("Get Raw Custom Slot At RawSlot "+(evt.getRawSlot()-3));
 			Slot slot = ((CustomPlayerGui)human.activeContainer).getRawCustomSlot(evt.getRawSlot());
-			if (slot != null && slot.getClickAction() != null && evt.getClick() != ClickType.DOUBLE_CLICK) slot.getClickAction().run(evt.getWhoClicked(), evt.getClick());
+			if (slot != null && slot.getClickAction() != null && evt.getClick() != ClickType.DOUBLE_CLICK) slot.getClickAction().run((Player)evt.getWhoClicked(), evt.getClick());
 		} else if (human.activeContainer instanceof CustomGui) {
 			if (evt.getWhoClicked() instanceof Player) Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> ((Player)evt.getWhoClicked()).updateInventory(), 1L);
 
 			if (customGuiClicked || playerGuiClicked) {
 				CustomGui gui = (CustomGui)human.activeContainer;
 				Slot slot = gui.getRawCustomSlot(evt.getRawSlot());
-				if (slot != null && slot.getClickAction() != null && evt.getClick() != ClickType.DOUBLE_CLICK) slot.getClickAction().run(evt.getWhoClicked(), evt.getClick());
+				if (slot != null && slot.getClickAction() != null && evt.getClick() != ClickType.DOUBLE_CLICK) slot.getClickAction().run((Player)evt.getWhoClicked(), evt.getClick());
 			}
 		} else if (human.activeContainer instanceof TextInput) {
 			if (evt.getWhoClicked() instanceof Player) Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> ((Player)evt.getWhoClicked()).updateInventory(), 1L);
@@ -72,7 +72,7 @@ public class CraftGuiHandler implements GuiHandler {
 				} else {
 					slot = ((CustomPlayerGui)human.defaultContainer).getCustomSlot(PlayerSlotType.INVENTORY, evt.getRawSlot()-3);
 				}
-				if (slot != null && slot.getClickAction() != null && evt.getClick() != ClickType.DOUBLE_CLICK) slot.getClickAction().run(evt.getWhoClicked(), evt.getClick());
+				if (slot != null && slot.getClickAction() != null && evt.getClick() != ClickType.DOUBLE_CLICK) slot.getClickAction().run((Player)evt.getWhoClicked(), evt.getClick());
 			}
 		}
 	}

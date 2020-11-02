@@ -247,7 +247,7 @@ public class ContainerAnvil_TextInput extends ContainerAnvil implements TextInpu
 			playerinventory.setCarried(ItemStack.b);
 			entityhuman.drop(carried, false);
 		}
-		if (this.closeAction != null) this.closeAction.run(entityhuman.getBukkitEntity());
+		if (this.closeAction != null && entityhuman instanceof EntityPlayer) this.closeAction.run(((EntityPlayer)entityhuman).getBukkitEntity());
 		if (!MenuCreator.getPluginInstance().isEnabled()) return;
 		if (this.parent != null && p != null) {
 			Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> {

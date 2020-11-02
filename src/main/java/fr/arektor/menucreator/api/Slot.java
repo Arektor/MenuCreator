@@ -3,7 +3,7 @@ package fr.arektor.menucreator.api;
 import java.util.List;
 
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
@@ -41,8 +41,8 @@ public interface Slot {
 	public ItemCondition getItemCondition();
 	public void setItemCondition(ItemCondition condition);
 	
-	public Reaction getItemChangeReaction();
-	public void setItemChangeReaction(Reaction reaction);
+	public ItemChangeReaction getItemChangeReaction();
+	public void setItemChangeReaction(ItemChangeReaction reaction);
 	
 	public int getX();
 	public int getY();
@@ -72,7 +72,7 @@ public interface Slot {
 	
 	
 	public interface AccessCondition {
-		boolean check(HumanEntity human);
+		boolean check(Player player);
 	}
 	
 	public interface ItemCondition {
@@ -81,11 +81,12 @@ public interface Slot {
 	
 	public interface ClickAction {
 		public static final ClickAction NOTHING = (who,clickType) -> {};
-		void run(HumanEntity who, ClickType clickType);
+		void run(Player who, ClickType clickType);
 	}
 	
-	public interface Reaction {
-		void run();
+	public interface ItemChangeReaction {
+		public static final ItemChangeReaction NOTHING = (oldItem) -> {};
+		void run(ItemStack oldItem);
 	}
 	
 	default boolean isEmpty() {

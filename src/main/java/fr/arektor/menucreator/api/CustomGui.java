@@ -244,6 +244,6 @@ public interface CustomGui {
 	}
 	
 	public interface HumanAction {
-		void run(HumanEntity who);
+		void run(Player who);
 	}
 }

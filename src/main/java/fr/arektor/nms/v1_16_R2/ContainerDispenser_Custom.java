@@ -212,7 +212,7 @@ public class ContainerDispenser_Custom extends ContainerDispenser implements Cus
 			playerinventory.setCarried(ItemStack.b);
 			entityhuman.drop(carried, false);
 		}
-		if (this.closeAction != null) this.closeAction.run(entityhuman.getBukkitEntity());
+		if (this.closeAction != null && entityhuman instanceof EntityPlayer) this.closeAction.run(((EntityPlayer)entityhuman).getBukkitEntity());
 		if (!MenuCreator.getPluginInstance().isEnabled()) return;
 		Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> {
 			if (p != null) p.updateInventory();
@@ -220,7 +220,7 @@ public class ContainerDispenser_Custom extends ContainerDispenser implements Cus
 			if ((!(c instanceof CustomGui) || ((CustomGui)c).getParent() != this) && (!(c instanceof TextInput) || ((TextInput)c).getParent() != this)) {
 				if (this.mirrorOf == null) {
 					for (fr.arektor.menucreator.api.Slot slot : this.getSlots()) {
-						if (slot.getAccessCondition().check(entityhuman.getBukkitEntity())) {
+						if (entityhuman instanceof EntityPlayer && slot.getAccessCondition().check(((EntityPlayer)entityhuman).getBukkitEntity())) {
 							entityhuman.drop(CraftItemStack.asNMSCopy(slot.get()), false);
 							slot.set(null);
 						}

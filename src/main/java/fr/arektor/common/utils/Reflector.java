@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class Reflector {
 
-	private static Map<Class<?>,Map<String,Field>> fields_master = new HashMap<Class<?>,Map<String,Field>>();
-	private static Map<Class<?>,Map<String,Method>> methods_master = new HashMap<Class<?>,Map<String,Method>>();
+	private static Map<Class<?>,Map<String,Field>> fields = new HashMap<Class<?>,Map<String,Field>>();
+	private static Map<Class<?>,Map<String,Method>> methods = new HashMap<Class<?>,Map<String,Method>>();
 
 	Class<?> clazz;
 	Object entity;
@@ -180,19 +180,19 @@ public class Reflector {
 	}
 
 	private static Map<String,Field> getFields(Class<?> clazz) {
-		if (fields_master.containsKey(clazz)) return fields_master.get(clazz);
+		if (fields.containsKey(clazz)) return fields.get(clazz);
 		else {
 			Map<String,Field> map = new HashMap<String,Field>();
-			fields_master.put(clazz,map);
+			fields.put(clazz,map);
 			return map;
 		}
 	}
 
 	private static Map<String,Method> getMethods(Class<?> clazz) {
-		if (methods_master.containsKey(clazz)) return methods_master.get(clazz);
+		if (methods.containsKey(clazz)) return methods.get(clazz);
 		else {
 			Map<String,Method> map = new HashMap<String,Method>();
-			methods_master.put(clazz,map);
+			methods.put(clazz,map);
 			return map;
 		}
 	}

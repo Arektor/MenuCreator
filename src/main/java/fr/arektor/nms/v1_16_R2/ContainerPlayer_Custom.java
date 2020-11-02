@@ -159,14 +159,14 @@ public class ContainerPlayer_Custom extends ContainerPlayer implements CustomPla
 			this.a(entityhuman, entityhuman.world, this.getCraftInventory());
 		}
 
-		if (this.closeAction != null) this.closeAction.run(entityhuman.getBukkitEntity());
+		if (this.closeAction != null && entityhuman instanceof EntityPlayer) this.closeAction.run(((EntityPlayer)entityhuman).getBukkitEntity());
 		if (!MenuCreator.getPluginInstance().isEnabled()) return;
 		Bukkit.getScheduler().runTaskLater(MenuCreator.getPluginInstance(), () -> {
 			this.owner.updateInventory();
 			Container c = ((CraftPlayer)this.owner).getHandle().activeContainer;
 			if ((!(c instanceof CustomGui) || ((CustomGui)c).getParent() != this) && (!(c instanceof TextInput) || ((TextInput)c).getParent() != this)) {
 				for (fr.arektor.menucreator.api.Slot slot : this.getSlots()) {
-					if (slot.getAccessCondition().check(entityhuman.getBukkitEntity())) {
+					if (entityhuman instanceof EntityPlayer && slot.getAccessCondition().check(((EntityPlayer)entityhuman).getBukkitEntity())) {
 						entityhuman.drop(CraftItemStack.asNMSCopy(slot.get()), false);
 						slot.set(null);
 					}
